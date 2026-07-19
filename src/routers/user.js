@@ -1,6 +1,7 @@
 const express = require("express")
 const router = new express.Router()
 const User = require("../models/user")
+const auth = require("../middleware/auth")
 
 
 router.post("/users", async (req, res) => { 
@@ -18,6 +19,14 @@ router.post("/users", async (req, res) => {
     
 })
 
+
+// 1. Client sends email + password (Postman)
+// 2. findByCredentials → find user, check password with bcrypt
+// 3. generateAuthToken → create a JWT, save it on the user, return it
+// 4. Client stores the token and sends it on later requests
+//    (Authorization: Bearer <token>)
+// 5. Server verifies the token → knows which user it is
+
 router.post("/users/login", async (req, res) => {
     try {
         const user = await User.findByCredentials(req.body.email, req.body.password)
@@ -32,16 +41,8 @@ router.post("/users/login", async (req, res) => {
 
 })
 
-router.get("/users", async (req, res) => {
-
-    try{
-        const users = await User.find({})
-        res.send(users)
-    } catch (e) {
-        res.status(500).send()
-    }
-
-
+router.get("/users/me", auth, async (req, res) => {
+    res.send(req.user)
 })
 
 router.get("/users/:id", async (req, res) => {
@@ -106,3 +107,4 @@ router.delete("/users/:id", async (req, res) => {
 })
 
 module.exports = router
+

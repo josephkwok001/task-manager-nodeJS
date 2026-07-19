@@ -41,6 +41,8 @@ const userSchema = new mongoose.Schema({
             }
         }
     },
+    // tokens stored as array becasue one user can be logged in from many devices
+    // allows log out of one device, remove just that token
     tokens: [{
         token: {
             type: String,
