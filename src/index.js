@@ -17,3 +17,6 @@ app.listen(port, () => {
 })
 
 
+
+// kill $(lsof -t -i:27017)
+// /Users/josephkwok/mongodb/bin/mongod --dbpath=/Users/josephkwok/mongodb-data
