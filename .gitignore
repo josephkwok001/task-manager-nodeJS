@@ -4,4 +4,4 @@ node_modules/
 npm-debug.log*
 images/
 avatars/
-config/dev.env
+config
